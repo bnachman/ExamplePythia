@@ -24,14 +24,14 @@
 #include "myTools.h"
 #include "myexampleAnalysis.h"
 
-#include "boost/program_options.hpp"
+//#include "boost/program_options.hpp"
 
 using std::cout;
 using std::endl;
 using std::string;
 using std::map;
 using namespace std;
-namespace po = boost::program_options;
+//namespace po = boost::program_options;
 
 int getSeed(int seed){                                                                                                                                               
   if (seed > -1) return seed;                                                                                                                                      \
@@ -52,6 +52,7 @@ int main(int argc, char* argv[]){
     int fDebug  = 0;
     string outName = "test.root";
 
+    /*
     po::options_description desc("Allowed options");
     desc.add_options() //100000
       ("help", "produce help message")
@@ -67,6 +68,7 @@ int main(int argc, char* argv[]){
         cout << desc << "\n";
         return 1;
     }
+    */
     //------
 
    Pythia8::Pythia* pythia8b = new Pythia8::Pythia();
@@ -90,27 +92,11 @@ int main(int argc, char* argv[]){
    pythia8b->readString("PhaseSpace:pTHatMin  = 1600");
    pythia8b->readString("PhaseSpace:pTHatMax  = 3200");
 
-   //Variations from Peter:
-   //http://home.thep.lu.se/Pythia/pythia82html/Variations.html#keywords
-   pythia8b->readString("UncertaintyBands:doVariations on");
-   pythia8b->readString("UncertaintyBands:List = {alphaShi fsr:muRfac=0.5}");
-   //pythia8b->readString("myVariation1 fsr:G2QQ:muRfac = 0.5");
-
    pythia8b->readString("Beams:idA = 2212");
    pythia8b->readString("Beams:idB = 2212");
    pythia8b->readString("Beams:eCM = 13000");
    pythia8b->init();//2212 /* p */, 2212 /* p */, 13000. /* TeV */);
 
-   /*
-     J1 = 10-20;
-     J2 = 20-40;
-     J3 = 40-80;
-     J4 = 80-160;
-     J5 = 160-320;
-     J6 = 320-640;
-     J7 = 640-1280;
-    */
-   
    analysis1->SetOutName(outName);
    analysis1->Begin();
    cout << "running on " << nEvents << " events " << endl;
